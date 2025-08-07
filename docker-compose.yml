@@ -1,0 +1,36 @@
+
+services:
+  inventario-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile    
+    volumes:      
+      - ./backend:/app/
+    ports:
+      - 8002:8000
+    hostname: inventario-backend
+    networks:
+      - inventario
+    environment:      
+      - ORACLE_EXPTOAGR=oracle+oracledb://EXPTOAGR_743751:EXPTOAGR@192.168.14.196:1521/?service_name=ORCLCR1
+      - SYNC_USER=Sync
+      - SYNC_PASS=24G#HS@2024
+      - TZ=America/Santo_Domingo
+      - BACKEND_CORS_ORIGINS=https://calipso.crcltd.com.do
+    container_name: inventario-backend
+
+volumes:
+  actividades_database:
+    name: d
+
+networks:
+  default:
+    external: true
+    name: none
+
+  inventario:
+    name: inventario
+    driver: bridge
+
+
+
